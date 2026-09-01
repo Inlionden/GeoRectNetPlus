@@ -1,0 +1,86 @@
+# GeoRectNetPlus configuration
+# Mirrors the supplied GeoRectNet WHU notebook defaults.
+# The Python implementation in config.py is the authoritative runtime config.
+
+smoke_test: true
+
+dataset:
+  data_root: "${WHU_ROOT}"
+  img_size: 512
+  label_frac: 0.01
+
+training:
+  batch_size: 2
+  num_workers: 0
+  use_amp: true
+  use_async_gates: false
+  async_warmup_batches: 5
+
+  epochs:
+    stage1: 1
+    stage2: 1
+    stage3: 1
+    warmup: 1
+
+  pseudo:
+    max_batches: 5
+    budget_N: 3
+    threshold_start: 0.65
+    threshold_end: 0.50
+    ramp_start: 0.1
+    freeze_backbone: true
+    edge_erode_px: 5
+
+learning_rates:
+  backbone: 0.00001
+  head: 0.0003
+  loss_weights: 0.00005
+
+loss:
+  w_in: 1.0
+  w_out: 1.5
+  dice_weight: 1.0
+  boundary_weight: 2.5
+  confidence_weight: 0.3
+  edl_weight: 0.5
+  claam_weight: 0.4
+  clac_weight: 0.2
+  sdr_weight: 0.3
+
+claam:
+  cam_weight: 0.5
+  contrast_weight: 0.5
+  entropy_weight: 0.05
+  high_margin: 0.7
+  low_margin: 0.3
+  diversity_weight: 0.0
+  threshold_start: 0.55
+  threshold_end: 0.40
+  cam_freeze_epochs: 0
+
+tvr:
+  window: 5
+  accept_ratio: 0.6
+
+gop:
+  rectilinear_threshold: 0.45
+
+cafcg:
+  disagreement_threshold: 0.3
+  keep_quantile: 0.70
+
+sdr:
+  max_distance: 50.0
+
+evaluation:
+  prediction_threshold: 0.5
+
+paths:
+  save_path: "checkpoints/best_model.pt"
+  checkpoint_path: "checkpoints/training_checkpoint.pt"
+  results_dir: "results"
+  persist_dir: "checkpoints/persist"
+
+cross_dataset:
+  inria_root: "${INRIA_ROOT}"
+  img_size: 512
