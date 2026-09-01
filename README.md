@@ -37,9 +37,7 @@ GeoRectNetPlus/
 ├── datasets/
 ├── models/
 ├── modules/
-├── losses/
 ├── training/
-├── evaluation/
 ├── configs/
 ├── requirements.txt
 └── train.py
